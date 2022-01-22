@@ -6,6 +6,8 @@ import java.io.File;
 import java.nio.channels.Channel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,9 +82,10 @@ import tools.Pair;
 import tools.StringUtil;
 import tools.Timer.MapTimer;
 
+
 public class AdminCommands {
 
-    @Command(names = {"fsay"}, parameters = "<name> <message>", requiredType = AccountType.ADMIN)
+	@Command(names = {"fsay"}, parameters = "<name> <message>", requiredType = AccountType.ADMIN)
 	public static class ForceSay extends AdminCommand {
 		@Override
 		public int execute(MapleCharacter c, String[] splitted) {
@@ -94,7 +97,7 @@ public class AdminCommands {
 			}
 
 			String msg = "";
-			for(int i = 2; i < splitted.length; i++) {
+			for (int i = 2; i < splitted.length; i++) {
 				if (i < splitted.length - 1) {
 					msg += splitted[i] + " ";
 				} else {
@@ -989,9 +992,9 @@ public class AdminCommands {
 		@Override
 		public int execute(MapleCharacter c, String[] splitted) {
 			if (c.getMap().getId() == 100000000) {
-                c.dropMessage(6, "Let's not make the same mistake again shall we?");
-                return 0;
-            }
+				c.dropMessage(6, "Let's not make the same mistake again shall we?");
+				return 0;
+			}
 			int mobId = Integer.parseInt(splitted[1]);
 			MapleMonster mob = MapleLifeProvider.getMonster(mobId);
 			c.getMap().spawnMonsterOnGroundBelow(mob, c.getPosition());
@@ -1677,7 +1680,7 @@ public class AdminCommands {
 		@Override
 		public int execute(MapleCharacter chr, String[] args) {
 			int invCheckId = 9010017;
-			NPCScriptManager.getInstance().start(chr.getClient(),invCheckId);
+			NPCScriptManager.getInstance().start(chr.getClient(), invCheckId);
 			return 1;
 		}
 
@@ -1689,44 +1692,40 @@ public class AdminCommands {
 
 	@Command(names = "giveitemall", parameters = "itemId", requiredType = AccountType.LOWGM)
 	public static class GiveItemAll extends AdminCommand {
-			public int execute(MapleCharacter chr, String[] args)
-			{
-				int itemId = Integer.parseInt(args[1]);
-				ItemInformation ii = ItemInformation.getInstance();
-				if(args.length <= 1)
-				{
-					chr.dropMessage(6,"!giveitemall <ItemID>");
-				}
-				else
-				{
-					if(ii.itemExists(itemId)) {
-						chr.dropMessage(6, "The given item Id is not a real item.");
-					}
-					else {
-						for(MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 99999.9, Arrays.asList(MapleMapObjectType.PLAYER)))
-						{
-							MapleCharacter PlayersInMap = (MapleCharacter) playersInMap;
-						   if(PlayersInMap.getId() != chr.getId()){
-							   PlayersInMap.gainItem(itemId, 1);
-							   PlayersInMap.dropMessage(6, "You got an item!");
-						   }
-						   chr.dropMessage(6,"You gave everyone in the map 1 " + itemId);
+		public int execute(MapleCharacter chr, String[] args) {
+			int itemId = Integer.parseInt(args[1]);
+			ItemInformation ii = ItemInformation.getInstance();
+			if (args.length <= 1) {
+				chr.dropMessage(6, "!giveitemall <ItemID>");
+			} else {
+				if (ii.itemExists(itemId)) {
+					chr.dropMessage(6, "The given item Id is not a real item.");
+				} else {
+					for (MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 99999.9, Arrays.asList(MapleMapObjectType.PLAYER))) {
+						MapleCharacter PlayersInMap = (MapleCharacter) playersInMap;
+						if (PlayersInMap.getId() != chr.getId()) {
+							PlayersInMap.gainItem(itemId, 1);
+							PlayersInMap.dropMessage(6, "You got an item!");
 						}
+						chr.dropMessage(6, "You gave everyone in the map 1 " + itemId);
 					}
 				}
-				return 1;
 			}
-			public String getDescription(){return "Everyone in your map gets the item specified";}
+			return 1;
+		}
+
+		public String getDescription() {
+			return "Everyone in your map gets the item specified";
+		}
 	}
 
 	@Command(names = {"debuff"}, parameters = "disease", requiredType = AccountType.LOWGM)
 	public static class Debuff extends AdminCommand {
 		@Override
 		public int execute(MapleCharacter chr, String[] args) {
-			if(args.length <= 1) {
-				chr.dropMessage(6,"!debuff SLOW|SEDUCE|ZOMBIFY|CONFUSE|STUN|DARKNESS");
-			}
-			else {
+			if (args.length <= 1) {
+				chr.dropMessage(6, "!debuff SLOW|SEDUCE|ZOMBIFY|CONFUSE|STUN|DARKNESS");
+			} else {
 				MobSkill skill = null;
 				DiseaseStats disease = null;
 				switch (args[1].toUpperCase()) // What type of disease did they request?
@@ -1757,16 +1756,12 @@ public class AdminCommands {
 				}
 				if (disease == null) {
 					chr.dropMessage(6, "!debuff SLOW|SEDUCE|ZOMBIFY|CONFUSE|STUN|DARKNESS");
-				}
-				else
-				{
-					for(MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 777777.7, Arrays.asList(MapleMapObjectType.PLAYER)))
-					{
+				} else {
+					for (MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 777777.7, Arrays.asList(MapleMapObjectType.PLAYER))) {
 						MapleCharacter PlayersInMap = (MapleCharacter) playersInMap;
-						if(chr.getId() != PlayersInMap.getId())
-						{
+						if (chr.getId() != PlayersInMap.getId()) {
 							PlayersInMap.giveDebuff(disease, skill);
-							PlayersInMap.dropMessage(6,"You have been debuffed.");
+							PlayersInMap.dropMessage(6, "You have been debuffed.");
 						}
 					}
 				}
@@ -1775,51 +1770,51 @@ public class AdminCommands {
 		}
 
 		@Override
-		public String getDescription() {return "Lets you add a debuff to players in your map.";}
+		public String getDescription() {
+			return "Lets you add a debuff to players in your map.";
+		}
 	}
 
 	@Command(names = {"warpmap"}, parameters = "MapId", requiredType = AccountType.LOWGM)
 	public static class WarpMap extends AdminCommand {
-			@Override
-			public int execute(MapleCharacter chr, String[] args)
-			{
-				if(args.length <= 1)
-				{
-					chr.dropMessage(6, "!warpmap <MAP_ID>");
+		@Override
+		public int execute(MapleCharacter chr, String[] args) {
+			if (args.length <= 1) {
+				chr.dropMessage(6, "!warpmap <MAP_ID>");
+			} else {
+				int mapId = Integer.parseInt(args[1]);
+				for (MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 999999.9, Arrays.asList(MapleMapObjectType.PLAYER))) {
+					MapleCharacter PlayersInMap = (MapleCharacter) playersInMap;
+					PlayersInMap.changeMap(mapId, 0);
 				}
-				else
-				{
-					int mapId = Integer.parseInt(args[1]);
-					for(MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 999999.9, Arrays.asList(MapleMapObjectType.PLAYER)))
-					{
-						MapleCharacter PlayersInMap = (MapleCharacter) playersInMap;
-						PlayersInMap.changeMap(mapId, 0);
-					}
-				}
-				return 1;
 			}
+			return 1;
+		}
 
-			@Override
-			public String getDescription(){return "Warps all players in your map to a specified map.";}
+		@Override
+		public String getDescription() {
+			return "Warps all players in your map to a specified map.";
+		}
 	}
 
 	@Command(names = {"killnear"}, parameters = "", requiredType = AccountType.LOWGM)
-	public static class KillNear extends AdminCommand{
-			@Override
-			public int execute(MapleCharacter chr, String[] args)
-			{
-				for(MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 400, Arrays.asList(MapleMapObjectType.PLAYER)))
-				{
-					MapleCharacter PlayersNear = (MapleCharacter) playersInMap;
-					if(PlayersNear.getId() != chr.getId() && PlayersNear.isAlive()) {
-						PlayersNear.addMPHP(-PlayersNear.getStat().getCurrentMaxHp(), -PlayersNear.getStat().getCurrentMaxMp());
-						PlayersNear.dropMessage(6, "You got tagged!");
-					}
+	public static class KillNear extends AdminCommand {
+		@Override
+		public int execute(MapleCharacter chr, String[] args) {
+			for (MapleMapObject playersInMap : chr.getMap().getMapObjectsInRange(chr.getPosition(), 400, Arrays.asList(MapleMapObjectType.PLAYER))) {
+				MapleCharacter PlayersNear = (MapleCharacter) playersInMap;
+				if (PlayersNear.getId() != chr.getId() && PlayersNear.isAlive()) {
+					PlayersNear.addMPHP(-PlayersNear.getStat().getCurrentMaxHp(), -PlayersNear.getStat().getCurrentMaxMp());
+					PlayersNear.dropMessage(6, "You got tagged!");
 				}
-				return 1;
 			}
-			@Override
-		public String getDescription(){return "Kills nearby players in a certain range";}
+			return 1;
+		}
+
+		@Override
+		public String getDescription() {
+			return "Kills nearby players in a certain range";
+		}
 	}
 
 	@Command(names = {"shop"}, parameters = "<shop_id>", requiredType = AccountType.LOWGM)
@@ -1887,13 +1882,11 @@ public class AdminCommands {
 				item.setGMLog(CurrentTime.getAllCurrentTime() + "on " + c.getName() + "Item obtained by command of.");
 				InventoryManipulator.addbyItem(c.getClient(), item);
 				String playerName = c.getName();
-				String[] adminNames = {"Souls", "Momo", "Yuri", "Desc", "Brandon"};
-				for(int i = 0; i < adminNames.length; i++)
-				{
+				String[] adminNames = {"Souls", "hotoke", "Yuri", "Desc", "Brandon"};
+				for (int i = 0; i < adminNames.length; i++) {
 					MapleCharacter admins = c.getClient().getChannelServer().getPlayerStorage().getCharacterByName(adminNames[i]);
-					if(admins != null)
-					{
-						admins.dropMessage(6,playerName + " has spawned in Quantity: " + item.getQuantity() + " Item: " + item.getItemId());
+					if (admins != null) {
+						admins.dropMessage(6, playerName + " has spawned in Quantity: " + item.getQuantity() + " Item: " + item.getItemId());
 					}
 				}
 			}
@@ -1907,27 +1900,24 @@ public class AdminCommands {
 	}
 
 	@Command(names = {"opennpc"}, parameters = "<npc_id>", requiredType = AccountType.LOWGM)
-		public static class OpenNpc extends AdminCommand {
-			@Override
-			public int execute(MapleCharacter chr, String[] args)
-			{
-				int NPC_ID = Integer.parseInt(args[1]);
-				MapleNPC npc = MapleLifeProvider.getNPC(NPC_ID);
-				if(npc != null && !npc.getName().equals("MISSINGNO"))
-				{
-				NPCScriptManager.getInstance().start(chr.getClient(),NPC_ID);
-				}
-				else {
-					chr.dropMessage(6, "This NPC does not exist");
-				}
-				return 1;
+	public static class OpenNpc extends AdminCommand {
+		@Override
+		public int execute(MapleCharacter chr, String[] args) {
+			int NPC_ID = Integer.parseInt(args[1]);
+			MapleNPC npc = MapleLifeProvider.getNPC(NPC_ID);
+			if (npc != null && !npc.getName().equals("MISSINGNO")) {
+				NPCScriptManager.getInstance().start(chr.getClient(), NPC_ID);
+			} else {
+				chr.dropMessage(6, "This NPC does not exist");
 			}
-			@Override
-			public String getDescription()
-			{
-				return "Opens an npc with the given ID.";
-			}
+			return 1;
 		}
+
+		@Override
+		public String getDescription() {
+			return "Opens an npc with the given ID.";
+		}
+	}
 
 	@Command(names = {"proitem"}, parameters = "<id> <stats> <attack> <mainpot_id> <bpot_id>", requiredType = AccountType.ADMIN)
 	public static class ProItem extends AdminCommand {
@@ -1976,9 +1966,9 @@ public class AdminCommands {
 				equip.setPotential6(bpot);
 
 				short flag = equip.getFlag();
-		        flag |= ItemFlag.UNTRADEABLE.getValue();
+				flag |= ItemFlag.UNTRADEABLE.getValue();
 
-		        equip.setFlag(flag);
+				equip.setFlag(flag);
 				equip.setOwner(c.getName());
 				equip.setGMLog(CurrentTime.getAllCurrentTime() + "on " + c.getName() + " Item obtained by command of.");
 
@@ -2018,11 +2008,9 @@ public class AdminCommands {
 				c.getMap().spawnItemDrop(c, c, toDrop, c.getPosition(), true, true);
 				String playerName = c.getName();
 				String[] adminNames = {"Souls", "Momo", "Yuri", "Desc", "iManatee", "Brandon"};
-				for(int i = 0; i < adminNames.length; i++)
-				{
+				for (int i = 0; i < adminNames.length; i++) {
 					MapleCharacter admins = c.getClient().getChannelServer().getPlayerStorage().getCharacterByName(adminNames[i]);
-					if(admins != null)
-					{
+					if (admins != null) {
 						admins.dropMessage(6, playerName + " has dropped " + itemId + " Quantity: " + quantity);
 					}
 				}
@@ -2148,7 +2136,7 @@ public class AdminCommands {
 		@Override
 		public int execute(MapleCharacter c, String[] splitted) {
 			if (!c.isHidden()) {
-				c.dropMessage(6, "Bag is only available in Hide Mode.");
+				c.dropMessage(6, "Vac only available in Hide Mode.");
 			} else {
 				for (final MapleMapObject mmo : c.getMap().getAllMonster()) {
 					final MapleMonster monster = (MapleMonster) mmo;
@@ -2345,7 +2333,7 @@ public class AdminCommands {
 			final int dp = Integer.parseInt(splitted[2]);
 			if (who != null) {
 				if (dp > 0) {
-					LoggerChatting.writeLog(LoggerChatting.givercLog,LoggerChatting.getRcgive("donation points", c, who, dp));
+					LoggerChatting.writeLog(LoggerChatting.givercLog, LoggerChatting.getRcgive("donation points", c, who, dp));
 					who.gainRC(dp);
 					who.dropMessage(6, "You have received: " + dp + " donation points from: " + c.getName());
 					c.dropMessage(5, "You have given: " + dp + " donation points to: " + who.getName());
@@ -2598,57 +2586,57 @@ public class AdminCommands {
 		public int execute(MapleCharacter c, String[] splitted) {
 			if (splitted.length > 1) {
 				switch (splitted[1]) {
-				case "start": {
-					if (c.getMapId() != 922290000) {
-						return 0;
-					}
-					if (c.getMap().getCharacters().size() < 5) {
-						c.getClient().getSession().writeAndFlush(MainPacketCreator.OnAddPopupSay(1052230, 3000,
-								"#face1#5 bingo minimum enrollment", ""));
-						return 0;
-					}
-					c.getMap().broadcastMessage(MainPacketCreator.getClock(30));
-					MapTimer.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							for (MapleCharacter chr : c.getMap().getCharacters()) {
-								if (chr != null) {
-									chr.changeMap(922290100, 0);
-								}
-							}
+					case "start": {
+						if (c.getMapId() != 922290000) {
+							return 0;
 						}
-					}, 30 * 1000);
-					MapTimer.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							if (c.getMapId() == 922290100) {
-								BingoGame bingo = new BingoGame(c.getMap().getCharacters());
+						if (c.getMap().getCharacters().size() < 5) {
+							c.getClient().getSession().writeAndFlush(MainPacketCreator.OnAddPopupSay(1052230, 3000,
+									"#face1#5 bingo minimum enrollment", ""));
+							return 0;
+						}
+						c.getMap().broadcastMessage(MainPacketCreator.getClock(30));
+						MapTimer.getInstance().schedule(new Runnable() {
+							@Override
+							public void run() {
 								for (MapleCharacter chr : c.getMap().getCharacters()) {
 									if (chr != null) {
-										chr.setBingoGame(bingo);
-										chr.getClient().getSession()
-												.writeAndFlush(MainPacketCreator.musicChange("BgmEvent/dolphin_night"));
-										chr.getClient().getSession()
-												.writeAndFlush(MainPacketCreator.playSE("multiBingo/start"));
-										chr.getClient().getSession()
-												.writeAndFlush(MainPacketCreator.showMapEffect("Gstar/start"));
+										chr.changeMap(922290100, 0);
 									}
 								}
 							}
-						}
-					}, 40 * 1000);
-					MapTimer.getInstance().schedule(new Runnable() {
-						@Override
-						public void run() {
-							c.getBingoGame().StartGame();
-						}
-					}, 42 * 1000);
-					break;
-				}
-				case "Stop": {
-					c.getBingoGame().StopBingo();
-					break;
-				}
+						}, 30 * 1000);
+						MapTimer.getInstance().schedule(new Runnable() {
+							@Override
+							public void run() {
+								if (c.getMapId() == 922290100) {
+									BingoGame bingo = new BingoGame(c.getMap().getCharacters());
+									for (MapleCharacter chr : c.getMap().getCharacters()) {
+										if (chr != null) {
+											chr.setBingoGame(bingo);
+											chr.getClient().getSession()
+													.writeAndFlush(MainPacketCreator.musicChange("BgmEvent/dolphin_night"));
+											chr.getClient().getSession()
+													.writeAndFlush(MainPacketCreator.playSE("multiBingo/start"));
+											chr.getClient().getSession()
+													.writeAndFlush(MainPacketCreator.showMapEffect("Gstar/start"));
+										}
+									}
+								}
+							}
+						}, 40 * 1000);
+						MapTimer.getInstance().schedule(new Runnable() {
+							@Override
+							public void run() {
+								c.getBingoGame().StartGame();
+							}
+						}, 42 * 1000);
+						break;
+					}
+					case "Stop": {
+						c.getBingoGame().StopBingo();
+						break;
+					}
 				}
 			}
 			return 1;
@@ -2663,47 +2651,48 @@ public class AdminCommands {
 	@Command(names = {"mob"}, parameters = "", requiredType = AccountType.LOWGM)
 	public static class Mob extends AdminCommand {
 		@Override
-		public int execute (MapleCharacter chr, String[] args){
+		public int execute(MapleCharacter chr, String[] args) {
 			MapleMapObject mob = chr.getMap().getAllMonster().get(1);
 			int oid = mob.getObjectId();
 			String mobHp = "Mob HP: " + chr.getMap().getMonsterByOid(oid).getFinalMaxHP();
 			chr.dropMessage(6, mobHp);
 			return 1;
 		}
+
 		@Override
-		public String getDescription() {return "Gives you the hp of the nearest mob.";}
+		public String getDescription() {
+			return "Gives you the hp of the nearest mob.";
+		}
 	}
 
 	@Command(names = {"botcheck"}, parameters = "<name>", requiredType = AccountType.LOWGM)
 	public static class BotCheck extends AdminCommand {
-			@Override
-			public int execute (MapleCharacter chr, String[] args)
-			{
-				String playerName = args[1];
-				MapleCharacter targetPlayer = chr.getClient().getChannelServer().getPlayerStorage().getCharacterByName(playerName);
-				if(args.length <= 1)
-				{
-					chr.dropMessage(1, "!botcheck <name>");
+		@Override
+		public int execute(MapleCharacter chr, String[] args) {
+			String playerName = args[1];
+			MapleCharacter targetPlayer = chr.getClient().getChannelServer().getPlayerStorage().getCharacterByName(playerName);
+			if (args.length <= 1) {
+				chr.dropMessage(1, "!botcheck <name>");
+			} else {
+				if (targetPlayer == null) {
+					chr.dropMessage(5, playerName + " is not online.");
+				} else {
+					NPCScriptManager.getInstance().start(targetPlayer.getClient(), 9000344); // bot check NPC
 				}
-				else {
-					if(targetPlayer == null)
-					{
-						chr.dropMessage(5, playerName + " is not online.");
-					}
-					else {
-						NPCScriptManager.getInstance().start(targetPlayer.getClient(), 9000344); // bot check NPC
-					}
-				}
-				return 1;
 			}
-			@Override
-		public String getDescription(){return "Sends a player an NPC dialogue bot check.";}
+			return 1;
+		}
+
+		@Override
+		public String getDescription() {
+			return "Sends a player an NPC dialogue bot check.";
+		}
 	}
+
 	@Command(names = {"reloadmap"}, parameters = "", requiredType = AccountType.LOWGM)
 	public static class ReloadMap extends AdminCommand {
 		@Override
-		public int execute (MapleCharacter chr, String[] args)
-		{
+		public int execute(MapleCharacter chr, String[] args) {
 			int playerId = chr.getId();
 			int currentMapId = chr.getMapId();
 			MapleMap mapp = chr.getClient().getChannelServer().getMapFactory().getMap(currentMapId);
@@ -2713,13 +2702,47 @@ public class AdminCommands {
 				MapleCharacter PlayerInMap = (MapleCharacter) playersInMap;
 				PlayerInMap.changeMap(currentMapId, 0);
 				if (PlayerInMap.getId() != playerId)
-					PlayerInMap.dropMessage(6,"You have been relocated due to map reloading. Sorry for the inconvenience.");
+					PlayerInMap.dropMessage(6, "You have been relocated due to map reloading. Sorry for the inconvenience.");
 			}
 			mapp.resetFully();
 			return 1;
 		}
-			@Override
-		public String getDescription(){return "Reloads the map";}
+
+		@Override
+		public String getDescription() {
+			return "Reloads the map";
+		}
+	}
+
+
+	@Command(names = {"s"}, parameters = "<monster_id> (amount)", requiredType = AccountType.GM)
+	public static class SpawnClean extends AdminCommand {
+		@Override
+		public int execute(MapleCharacter c, String[] splitted) {
+			final int mid = Integer.parseInt(splitted[1]);
+			final int num = Math.min(getOptionalIntArg(splitted, 2, 1), 300);
+
+
+			final MapleMonster onemob = MapleLifeProvider.getMonster(mid);
+
+			if (onemob != null) {
+				c.dropMessage(6, "Monster with id: " + mid + "has spawned.");
+				for (int i = 0; i < num; i++) {
+					MapleMonster mob = MapleLifeProvider.getMonster(mid);
+					c.getMap().spawnMonsterOnGroundBelow(mob, c.getPosition());
+					c.dropMessage(6, "" + mob.getObjectId());
+					for (Pair<Integer, Integer> ms : mob.getSkills()) {
+						c.dropMessage(6, ms.getLeft() + ":" + ms.getRight());
+					}
+				}
+				return 0;
+			}
+			return 1;
+		}
+
+		@Override
+		public String getDescription() {
+			return "Spawns a monster with the specified mob id and optionally the amount of monsters to spawn.";
+		}
 	}
 }
-

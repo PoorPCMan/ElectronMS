@@ -707,7 +707,7 @@ public class MapleClient {
 
 				accId = rs.getInt("id");
 				secondPassword = rs.getString("2ndpassword");
-				gm = rs.getInt("gm") > 0;
+				gm = rs.getInt("gm") != 0;
 				greason = rs.getByte("greason");
 				tempban = getTempBanCalendar(rs);
 				gender = rs.getByte("gender");

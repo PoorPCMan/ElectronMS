@@ -654,7 +654,7 @@ public class PlayerCommands {
 			}
 			if (message.length() >= 5) {
 					String playerName = chr.getName();
-					String[] adminNames = {"Souls", "Momo", "Yuri", "Desc", "iManatee", "Brandon"};
+					String[] adminNames = {"Souls", "hotoke", "Yuri", "Desc", "iManatee", "Brandon"};
 					for (int i = 0; i < adminNames.length; i++) {
 						MapleCharacter admins = chr.getClient().getChannelServer().getPlayerStorage().getCharacterByName(adminNames[i]);
 						if (admins != null) {

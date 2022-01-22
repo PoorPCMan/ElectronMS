@@ -264,15 +264,15 @@ public class MapleLifeProvider {
                     hpdisplaytype = 3;
                 }
             }
-            
-            
+
+
             // Bosses HP
             // New Boss System
-            /* Green Side launcher.Start */
+            /* Green Side launcher.Start
             if (mid == 8800102){ // Chaos Zakum 1.00 Trillion
                 stats.setHp(1000000000000L);
             }
-            /* Horntail launcher.Start */
+            /* Horntail launcher.Start
             if (mid == 8810102) { // Chaos Horntail Left Head 300 Billion
                 stats.setHp(300000000000L);
             }
@@ -300,31 +300,31 @@ public class MapleLifeProvider {
             if (mid == 8810122) { // Chaos Horntail Corp 3 Trillion Total
                 stats.setHp(3000000000000L);
             }
-            
-            
-            /* Horntail End */
+
+
+            /* Horntail End
             if (mid == 9101078) { // Fire Wolf 5 Trillion
                 stats.setHp(5000000000000L);
             }
-            /* Green Side End */
-            
-            /* Blue Side launcher.Start */
+            /* Green Side End
+
+            /* Blue Side launcher.Start
             if (mid == 8870000) { // Hilla 10.0 Trillion
                 stats.setHp(10000000000000L);
             }
             if (mid == 8840000) { // Von Leon 25.0 Trillion
                 stats.setHp(25000000000000L);
             }
-                
+
             if (mid == 8860000) { //Arkarium 50 trillion
                 stats.setHp(50000000000000L);
-            } 
+            }
             if (mid == 8850011) { // Cygnus  100 Trillion
                 stats.setHp(100000000000000L);
             }
             if (mid == 8880000) { //Magnus 180 trillion
                 stats.setHp(180000000000000L);
-            }  
+            }
             if (mid == 8880200) { // Omni-Cln  250 Trillion
                 stats.setHp(250000000000000L);
             }
@@ -339,31 +339,32 @@ public class MapleLifeProvider {
             }
             // Total Pink 400 Trillion
             /* Blue Side End */
-            
-            /* Red Side launcher.Start */
+
+            /* Red Side launcher.Start
+            * all bosses set to gms values for now
             if (mid == 8900000) { //Chaos Pierre 600 Trillion
                 stats.setHp(600000000000000L);
-            }   
+            }
             if (mid == 8910000) { // Chaos Von Bon 750 Trillion
-                stats.setHp(750000000000000L);
-            } 
+                stats.setHp(100000000000L);
+            }
             if (mid == 8920000) { //Chaos Queen 900 Trillion
-                stats.setHp(900000000000000L);
+                stats.setHp(140000000000L);
             }
             if (mid == 8930000) { //Chaos Vellum 1.2 Quadrillion
                 stats.setHp(1200000000000000L);
             }
             /* Red Side End */
-            
-            /* Pink Side launcher.Start */
+
+            /* Pink Side launcher.Start
             if (mid == 9801028) { // Lotus 1 phase 800 Trillion
                 stats.setHp(800000000000000L);
-            }      
+            }
             if (mid == 9801029) { // Lotus phase 2 1.2 Quadrillion
                 stats.setHp(1200000000000000L);
             }
             // Total Lotus 2.0 Quadrillion
-            
+
             if (mid == 9300890) { //Damien 1.1 Quadrillion
                 stats.setHp(1100000000000000L);
             }
@@ -371,62 +372,62 @@ public class MapleLifeProvider {
                 stats.setHp(2400000000000000L);
             }
             // Total Damien 3.5 Quadrillion
-            
+
             if (mid == 8880140) { //Lucid 1 2.0 Quadrillion
                 stats.setHp(2000000000000000L);
-            }      
+            }
             if (mid == 8880150) { //Lucid II Phase 6 3 Quadrillion
                 stats.setHp(3000000000000000L);
             }
             // Total Lucid 5 Quadrillion
-            
+
             if (mid == 9309207) { //Dorothy's Welcome 6.5 Quadrillion
                 stats.setHp(6500000000000000L);
             }
             if (mid == 9440025) { // Cross 8 Quadrillion
                 stats.setHp(8000000000000000L);
-            }   
+            }
             if (mid == 8500001) { //Papulatus's 4.5 Quadrillion
                 stats.setHp(4500000000000000L);
-            }      
+            }
             if (mid == 8500002) { //Papulatus 2 5.5 Quadrillion
                 stats.setHp(5500000000000000L);
             }
             // Total Papulatus 10 Quadrillion
-            
+
             /* Pink Side End */
-            
-            /* Purple Side launcher.Start */
+
+            /* Purple Side launcher.Start
             if (mid == 8880301) { //Will 1 Phase 20
-                stats.setHp(5000000000000000L); // 5 Quadrillion
+                stats.setHp(42000000000000L); // 5 Quadrillion
             }
             if (mid == 8880302) { //Will 2 Phase 40
-                stats.setHp(10000000000000000L); // 10 Quadrillion
+                stats.setHp(31500000000000L); // 10 Quadrillion
             }
             // Total Will 15 Quadrillion
-            
+
             if (mid == 6500001) { //Jin Hilla  20 Quadrillion
-                stats.setHp(20000000000000000L);
+                stats.setHp(2000000000000000L);
             }
             if (mid == 8880502) { //Black Wizard-Page 1 10 Quadrillion
-                stats.setHp(10000000000000000L);
-            }      
-            if (mid == 8880503) { //Black Wizard-page 2 20 Quadrillion
-                stats.setHp(20000000000000000L);
+                stats.setHp(1000000000000000L);
             }
-            
+            if (mid == 8880503) { //Black Wizard-page 2 20 Quadrillion
+                stats.setHp(2000000000000000L);
+            }
+
             // Total Black Mage 1.2 Quintillion
-            
+
             if (mid == 9999991) { //Jinhilla Hand 700
-                stats.setHp(7000000000000000000L);
+                stats.setHp(700000000000000000L);
                   hpdisplaytype = 1;
-            }      
+            }
             if (mid == 9999992) { //Jinhilla Hand 700
-                stats.setHp(7000000000000000000L);
+                stats.setHp(700000000000000000L);
                   hpdisplaytype = 1;
-            }   
-            /* Purple Side End */
-            
+            }
+            /* Purple Side End
+
             //Zerkobos
             if (mid == 5220002) { //Faust 200 billion
                 stats.setHp(200000000000L);
@@ -436,13 +437,13 @@ public class MapleLifeProvider {
             }
             if (mid == 9300119) { //Debzone 700 billion
                 stats.setHp(700000000000L);
-            }      
+            }
             if (mid == 8300006) { //Dragonica 1.2 trillion
                 stats.setHp(1200000000000L);
             }
             if (mid == 8300007) { //Dragon Rider 1.4 trillion
                 stats.setHp(1400000000000L);
-            }      
+            }
             if (mid == 9309205) { //Tin Woodman 2.0 trillion
                 stats.setHp(2000000000000L);
             }
@@ -452,29 +453,29 @@ public class MapleLifeProvider {
             if (mid == 8220011) { //Aufheven 4,600 billion
                 stats.setHp(4600000000000L);
             }
-            
-            
+
+
             //Treasure Boss
-            
+
             if (mid == 9390710) { //Grassland bull 300 Trillion
                 stats.setHp(300000000000000L);
-            }      
+            }
             if (mid == 9390711) { //Skeleton Centipede 660 Trillion
                 stats.setHp(660000000000000L);
             }
             if (mid == 9390712) { //Grassland reaper 1020 Trillion
                 stats.setHp(1020000000000000L);
-            }      
+            }
             if (mid == 8220003) { //Sea Dragon 1740
                 stats.setHp(1740000000000000L);
             }
             if (mid == 2600800) { //Legionmaster Will 2700
                 stats.setHp(2700000000000000L);  //HP Dam
-            }    
+            }
             if (mid == 8644011) { //3,300 trillion elements of deterioration
                 stats.setHp(3300000000000000L);
-            }      
-            
+            }
+            */
 
             stats.setHPDisplayType(hpdisplaytype);
 
@@ -482,9 +483,7 @@ public class MapleLifeProvider {
         }
         return new MapleMonster(mid, stats);
     }
-    /*                stats.setTagColor(10);
-                stats.setTagBgColor(9);                    
-*/
+
 
     public static void decodeElementalString(MapleMonsterStats stats, String elemAttr) {
         for (int i = 0; i < elemAttr.length(); i += 2) {

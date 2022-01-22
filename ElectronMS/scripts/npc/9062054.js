@@ -6,12 +6,12 @@ var store = [
 	{'itemid' : 2049371, 'qty' : 1, 'price' : 150}, // 17 star AEE
 	{'itemid' : 2049370, 'qty' : 1, 'price' : 100}, // 12 star AEE
 	{'itemid' : 2630282, 'qty' : 15, 'price' : 50}, // Nodestone Boxes
-	//{'itemid' : 5121060, 'qty' : 1, 'price' : 5000},
+	{'itemid' : 5121060, 'qty' : 1, 'price' : 500}, // MVP BUFF
 	{'itemid' : 4310034, 'qty' : 300, 'price' : 25}, // Justice Coins
 	{'itemid' : 5062009, 'qty' : 100, 'price' : 25}, // Red Cube
 	{'itemid' : 5062010, 'qty' : 100, 'price' : 25}, // Black Cubes
 	{'itemid' : 5062500, 'qty' : 100, 'price' : 25}, // BPOT Cubes
-	{'itemid' : 5062503, 'qty' : 100, 'price' : 25} // White Cubes
+	//{'itemid' : 5062503, 'qty' : 100, 'price' : 25} // White Cubes
 	//{'itemid' : 2049360, 'qty' : 1, 'price' : 13500},
 	//{'itemid' : 4310156, 'qty' : 1, 'price' : 5000},
 	//{'itemid' : 2470003, 'qty' : 1, 'price' : 5000},
